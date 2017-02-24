@@ -515,9 +515,32 @@ function updatePositions() {
   var items = document.getElementsByClassName('mover');
   var itmLength = items.length;
 
+  // Modified
+  //moved document access outside for loop //get the current y coordinate
+  var currentYcordPosition = document.body.scrollTop; //get the current y coordinate
+
+  // Modified
+  // replaced reminder calculation with randum number as the out come is fixed set of numbers
+  var phase=[];
+
+  for (var s = 0; s < 5; s++) {
+      phase[s] = Math.sin((currentYcordPosition / 1250) + s);
+      //console.log("cal value: "+Math.sin((currentYcordPosition / 1250) + s)  );
+    }
+
+    var xPixel;
+
+    var len = parentElement.length;
   for (var i = 0; i < itmLength; i++) {
-    var phase = Math.sin((document.body.scrollTop / 1250) + (i % 5));
-    items[i].style.left = items[i].basicLeft + 100 * phase + 'px';
+
+      // modifed
+      // replaced style.lef with tranformation to achive better FPS
+      //items[i].style.left = items[i].basicLeft + 100 * phase[i%5] + 'px';
+
+
+      xPixel = (items[i].basicLeft + 100 * phase[i%5]) + 'px';
+      //console.log("xpostion change: "+xPixel);
+      items[i].style.transform = 'translateX(' + xPixel + ')';
   }
 
   // User Timing API to the rescue again. Seriously, it's worth learning.
