@@ -530,7 +530,6 @@ function updatePositions() {
 
     var xPixel;
 
-    var len = parentElement.length;
   for (var i = 0; i < itmLength; i++) {
 
       // modifed
