@@ -540,7 +540,9 @@ function updatePositions() {
 
       xPixel = (items[i].basicLeft + 100 * phase[i%5]) + 'px';
       //console.log("xpostion change: "+xPixel);
-      items[i].style.transform = 'translateX(' + xPixel + ')';
+      //items[i].style.transform = 'translateX(' + xPixel + ')';
+      items[i].style.transform = 'translate3d(' + xPixel + ',0,0)';
+      items[i].style.backfaceVisibility = "hidden";
   }
 
   // User Timing API to the rescue again. Seriously, it's worth learning.
