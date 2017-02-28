@@ -421,48 +421,42 @@ var resizePizzas = function(size) {
   changeSliderLabel(size);
 
    // Returns the size difference to change a pizza element from one size to another. Called by changePizzaSlices(size).
-  function determineDx (elem, size) {
-    var oldWidth = elem.offsetWidth;
-    var windowWidth = document.getElementById('randomPizzas').offsetWidth;
-    var oldSize = oldWidth / windowWidth;
-
-    // Changes the slider value to a percent width
-    function sizeSwitcher (size) {
-      switch(size) {
-        case "1":
-          return 0.25;
-        case "2":
-          return 0.3333;
-        case "3":
-          return 0.5;
-        default:
-          console.log("bug in sizeSwitcher");
-      }
-    }
-
-    var newSize = sizeSwitcher(size);
-    var dx = (newSize - oldSize) * windowWidth;
-
-    return dx;
-  }
 
   // Modified
   // Iterates through pizza elements on the page and changes their widths
   // replace querySelectorAll with getElementsByClassName to improve performance
   // optimized for loop by moving dom reference and length calc outside for loop
+  // consolidated the functions determineDx and sizeSwitcher into changePizzaSizes function.
+  //  removed unnecessary logic to determine newdiwth of pizza.
+  // found that the value of newwithd calculated by using function determineDx  and new sizeSwitcher are same
+  // hence removed all duplicate code
   function changePizzaSizes(size) {
+
+    var newwidth;
+      switch(size) {
+        case "1":
+          //console.log("inside case 1");
+          newWidth = 25;
+          break;
+        case "2":
+          //console.log("inside case 2");
+          newWidth = 33.3;
+          break;
+        case "3":
+        //console.log("inside case 3");
+          newWidth = 50;
+          break;
+        default:
+          console.log("bug in sizeSwitcher");
+          break;
+      }
     var pizzaContainer = document.getElementsByClassName('randomPizzaContainer');
     var lenpizzaContainer = pizzaContainer.length;
-
-    // moved dx and newwidth calculation outside for loop
-    // using fisrt element(randomPizzaContainer) for calculations
-    var dx = determineDx(pizzaContainer[0], size);
-    var newwidth = (pizzaContainer[0].offsetWidth + dx) + 'px';
 
 
     for (var i = 0; i < lenpizzaContainer; i++) {
       //console.log("newwidth : "+newwidth);
-       pizzaContainer[i].style.width = newwidth;
+       pizzaContainer[i].style.width = newWidth + "%";
     }
   }
 
@@ -509,7 +503,7 @@ function logAverageFrame(times) {   // times is the array of User Timing measure
 // Moves the sliding background pizzas based on scroll position
 function updatePositions() {
   frame++;
-  window.performance.mark("mark_start_frame");
+
 
   // Modified
   // replaced querySelectorAll method with getElementsByClassName to improve performance
@@ -519,7 +513,7 @@ function updatePositions() {
   // Modified
   //moved document access outside for loop //get the current y coordinate
   var currentYcordPosition = document.body.scrollTop; //get the current y coordinate
-
+  window.performance.mark("mark_start_frame");
   // Modified
   // replaced reminder calculation with randum number as the out come is fixed set of numbers
   var phase=[];
@@ -540,9 +534,9 @@ function updatePositions() {
 
       xPixel = (items[i].basicLeft + 100 * phase[i%5]) + 'px';
       //console.log("xpostion change: "+xPixel);
-      //items[i].style.transform = 'translateX(' + xPixel + ')';
-      items[i].style.transform = 'translate3d(' + xPixel + ',0,0)';
-      items[i].style.backfaceVisibility = "hidden";
+      items[i].style.transform = 'translateX(' + xPixel + ')';
+      //items[i].style.transform = 'translate3d(' + xPixel + ',0,0)';
+
   }
 
   // User Timing API to the rescue again. Seriously, it's worth learning.
@@ -572,7 +566,8 @@ document.addEventListener('DOMContentLoaded', function() {
   var s = 256;
   for (var i = 0; i < 30; i++) {
     var elem = document.createElement('img');
-    elem.className = 'mover';
+    //elem.className = 'mover';
+    elem.classList.add("mover");
     elem.src = "images/pizza.png";
     elem.style.height = "100px";
     elem.style.width = "73.333px";
