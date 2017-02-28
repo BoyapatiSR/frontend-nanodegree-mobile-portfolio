@@ -501,14 +501,14 @@ function logAverageFrame(times) {   // times is the array of User Timing measure
 // https://www.igvita.com/slides/2012/devtools-tips-and-tricks/jank-demo.html
 
 // Moves the sliding background pizzas based on scroll position
+var items=[];
+var itmLength;
+
+
 function updatePositions() {
   frame++;
 
 
-  // Modified
-  // replaced querySelectorAll method with getElementsByClassName to improve performance
-  var items = document.getElementsByClassName('mover');
-  var itmLength = items.length;
 
   // Modified
   //moved document access outside for loop //get the current y coordinate
@@ -535,6 +535,7 @@ function updatePositions() {
       xPixel = (items[i].basicLeft + 100 * phase[i%5]) + 'px';
       //console.log("xpostion change: "+xPixel);
       items[i].style.transform = 'translateX(' + xPixel + ')';
+      //items[i].style.transform = "translateX(" + centiphase +"px)";
       //items[i].style.transform = 'translate3d(' + xPixel + ',0,0)';
 
   }
@@ -550,7 +551,10 @@ function updatePositions() {
 }
 
 // runs updatePositions on scroll
-window.addEventListener('scroll', updatePositions);
+//window.addEventListener('scroll', updatePositions);
+window.addEventListener('scroll', function() {
+    window.requestAnimationFrame(updatePositions);
+});
 
 
 // Modified
@@ -564,6 +568,7 @@ var pizzaElement = document.getElementById('movingPizzas1');
 document.addEventListener('DOMContentLoaded', function() {
   var cols = 8;
   var s = 256;
+
   for (var i = 0; i < 30; i++) {
     var elem = document.createElement('img');
     //elem.className = 'mover';
@@ -571,9 +576,19 @@ document.addEventListener('DOMContentLoaded', function() {
     elem.src = "images/pizza.png";
     elem.style.height = "100px";
     elem.style.width = "73.333px";
+    elem.style.left = ((i % cols) * s)+ 'px';
     elem.basicLeft = (i % cols) * s;
     elem.style.top = (Math.floor(i / cols) * s) + 'px';
     pizzaElement.appendChild(elem);
   }
-  updatePositions();
+
+  //updatePositions();
+  // Modified
+  // replaced querySelectorAll method with getElementsByClassName to improve performance
+  // Gets all moving pizza objects from the DOM and puts them into one array to reduce DOM access
+  items = document.getElementsByClassName('mover');
+  itmLength = items.length;
+
+
+  window.requestAnimationFrame(updatePositions);
 });
