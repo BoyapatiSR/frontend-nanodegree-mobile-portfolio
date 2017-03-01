@@ -568,6 +568,7 @@ var pizzaElement = document.getElementById('movingPizzas1');
 document.addEventListener('DOMContentLoaded', function() {
   var cols = 8;
   var s = 256;
+  var left;
 
   for (var i = 0; i < 30; i++) {
     var elem = document.createElement('img');
@@ -576,8 +577,9 @@ document.addEventListener('DOMContentLoaded', function() {
     elem.src = "images/pizza.png";
     elem.style.height = "100px";
     elem.style.width = "73.333px";
-    elem.style.left = ((i % cols) * s)+ 'px';
-    elem.basicLeft = (i % cols) * s;
+    left = (i % cols) * s;
+    elem.style.left = (left/3) + 'px';
+    elem.basicLeft = left;
     elem.style.top = (Math.floor(i / cols) * s) + 'px';
     pizzaElement.appendChild(elem);
   }
@@ -588,6 +590,7 @@ document.addEventListener('DOMContentLoaded', function() {
   // Gets all moving pizza objects from the DOM and puts them into one array to reduce DOM access
   items = document.getElementsByClassName('mover');
   itmLength = items.length;
+  console.log("number of moving pizzas: "+itmLength);
 
 
   window.requestAnimationFrame(updatePositions);
