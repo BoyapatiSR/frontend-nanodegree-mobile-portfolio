@@ -577,8 +577,10 @@ document.addEventListener('DOMContentLoaded', function() {
     elem.src = "images/pizza.png";
     elem.style.height = "100px";
     elem.style.width = "73.333px";
+    //modified
+    // set the lef property here
     left = (i % cols) * s;
-    elem.style.left = (left/3) + 'px';
+    elem.style.left = (left/6) + 'px';
     elem.basicLeft = left;
     elem.style.top = (Math.floor(i / cols) * s) + 'px';
     pizzaElement.appendChild(elem);
