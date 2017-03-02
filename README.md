@@ -129,7 +129,7 @@ Changed the image name to pizzeria-mini.jpg in Pizza.html at line number 41 to u
 
 Optimized the loops contained in the updatePositions function and the onDOMContentLoaded event handler.
 
-#######Changed starts at line(main.js): 580
+Changes starts at line(main.js): 580
 
 ```
 1.Moved dom access outside function and for loop
@@ -146,7 +146,7 @@ Optimized the loops contained in the updatePositions function and the onDOMConte
 
 Applied translateX()  transform functions to the sliding pizza elements within the updatePositions function.
 
-#######Changed starts at line(main.js): 524
+Changes starts at line(main.js): 524
 
 ```
 1.Created global variables to cache background pizzas and number of background pizzas
